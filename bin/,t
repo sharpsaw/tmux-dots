@@ -1,0 +1,26 @@
+#!/bin/sh -xe
+## Reattach to a named session (defaults to "quick"), or start it up using ~/.$1-tmux.conf
+# See http://github.com/rking/rking-dots/ for some example .*-tmux.conf's
+
+# TODO: http://ft.bewatermyfriend.org/comp/zsh.html
+
+if [ $# -gt 0 ]; then
+    session=$1; shift
+else
+    session=quick
+fi
+session_startup_file=~/.$session-tmux.conf
+
+# Start the server (which is the one time when ~/.tmux.conf is read), then
+# persist. Can be shut down completely with: `tmux kill-server` (though you'll
+# probably want to `tmux ls` first to make sure there aren't any non-dummy
+# sessions you care about.)
+tmux has -t dummy 2>/dev/null || tmux new -d -s dummy
+
+if tmux has -t $session; then
+    # Don't forget about passing "-d" to detach the other clients.
+    tmux attach -t $session "$@"
+else
+    tmux new -s $session\; source $session_startup_file\; "$@"
+    tmux attach -t $session "$@"
+fi
