@@ -1,0 +1,5 @@
+#!/bin/sh -xe
+s=/tmp/tweemux
+tmux -S $s start-server
+chmod 777 $s
+tmux -S $s "$@"
