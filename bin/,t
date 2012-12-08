@@ -4,11 +4,12 @@
 
 # TODO: http://ft.bewatermyfriend.org/comp/zsh.html
 
-if [ $# -gt 0 ]; then
-    session=$1; shift
-else
-    session=quick
+if [ $# = 0 ]; then
+    tmux ls
+    exit
 fi
+
+session=$1; shift
 session_startup_file=~/.$session-tmux.conf
 
 # Start the server (which is the one time when ~/.tmux.conf is read), then
