@@ -8,9 +8,7 @@ if [ $# = 0 ]; then
     tmux ls
     exit
 fi
-
-session=$1; shift
-session_startup_file=~/.$session-tmux.conf
+session_startup_file=~/.,t/$session-tmux.conf
 
 # Start the server (which is the one time when ~/.tmux.conf is read), then
 # persist. Can be shut down completely with: `tmux kill-server` (though you'll
