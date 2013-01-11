@@ -6,5 +6,9 @@ if [ ! -e $s ]; then # I'm the leader
     tmux -S $s "$@"
     rm $s
 else # I'm the follower
-    tmux -S $s attach
+    if [ $# -gt 0 ]; then
+        tmux -S $s "$@"
+    else
+        tmux -S $s attach
+    fi
 fi
