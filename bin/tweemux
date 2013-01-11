@@ -1,14 +1,13 @@
 #!/bin/sh -xe
 s=/tmp/tweemux
-if [ ! -e $s ]; then # I'm the leader
-    tmux -S $s start-server
+sessmux() { tmux -S $s "$@"; }
+if [ ! -e $s ]; then
+    sessmux start-server
     chmod 777 $s
-    tmux -S $s "$@"
-    rm $s
-else # I'm the follower
-    if [ $# -gt 0 ]; then
-        tmux -S $s "$@"
-    else
-        tmux -S $s attach
-    fi
+fi
+
+if [ $# -gt 0 ]; then
+    sessmux "$@"
+else
+    sessmux attach || sessmux new-session
 fi
