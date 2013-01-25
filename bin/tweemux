@@ -4,10 +4,9 @@ PATH=/usr/local/bin:$PATH
 sessmux() { tmux -S $s "$@"; }
 if [ ! -e $s ]; then
     sessmux start-server
-    chmod 777 $s
-fi
-
-if [ $# -gt 0 ]; then
+    (sleep 1; chmod 777 $s) &>- & # weird `sleep` to make OS X work
+    sessmux new-session
+elif [ $# -gt 0 ]; then
     sessmux "$@"
 else
     sessmux attach || sessmux new-session
