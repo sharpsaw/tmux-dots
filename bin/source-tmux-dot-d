@@ -1,0 +1,6 @@
+#!/bin/sh -e
+dir=~/.tmux.d
+[ -d $dir ]
+for n in $dir/*; do
+    tmux source $n
+done
