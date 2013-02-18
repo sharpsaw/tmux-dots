@@ -1,2 +1,3 @@
 #!/bin/sh -xe
-keymux-altnums; keymux-alttab
+echo "$0 is deprecated, now that all it does is keymux-altnums (use that)"
+keymux-altnums
